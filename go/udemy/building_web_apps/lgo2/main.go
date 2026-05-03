@@ -2,41 +2,25 @@ package main
 
 import (
 	"log"
-	"time"
+
+	"github.com/mnemosyne12/code/go/udemy/building_web_apps/lgo2/helpers"
 )
-
-// Capitalize the struct so that it's availabile to other packages
-type User struct {
-	FirstName   string
-	LastName    string
-	PhoneNumber string
-	Age         int
-	BirthDate   time.Time
-}
-
-func (u *User) myName() string {
-	return u.FirstName + " " + u.LastName
-}
-
-func (u *User) myAge() int {
-	return u.Age
-}
 
 func main() {
 
-	userJohn := User{
+	userJohn := helpers.User{
 		FirstName: "John",
 		LastName:  "Smith",
 		Age:       26,
 	}
 
-	userMike := User{
+	userMike := helpers.User{
 		FirstName: "Mike",
 		LastName:  "Hunt",
 		Age:       30,
 	}
 
-	userMap := make(map[string]User)
+	userMap := make(map[string]helpers.User)
 
 	userMap["john"] = userJohn
 	userMap["mike"] = userMike
@@ -44,7 +28,7 @@ func main() {
 	names := []string{userJohn.FirstName, userMike.FirstName}
 
 	for name, user := range userMap {
-		log.Println(name, user.myName(), user.myAge())
+		log.Println(name, user.MyName(), user.MyAge())
 	}
 
 	log.Println(names)
