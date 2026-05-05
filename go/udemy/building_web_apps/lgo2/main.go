@@ -1,36 +1,46 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 
 	"github.com/mnemosyne12/code/go/udemy/building_web_apps/lgo2/helpers"
 )
 
 func main() {
+	myJson := `
+	[
+		{
+			"first_name": "Clark",
+			"last_name": "Kent",
+			"hair_color": "black",
+			"has_dog": true
+		},
+		{
+			"first_name": "Bruce",
+			"last_name": "Wayne",
+			"hair_color": "black",
+			"has_dog": false
+		}
+	]`
 
-	userJohn := helpers.User{
-		FirstName: "John",
-		LastName:  "Smith",
-		Age:       26,
+	var unmarshalled []helpers.Person
+	err := json.Unmarshal([]byte(myJson), &unmarshalled)
+	if err != nil {
+		log.Println("Error unmarshalling json", err)
 	}
 
-	userMike := helpers.User{
-		FirstName: "Mike",
-		LastName:  "Hunt",
-		Age:       30,
-	}
+	log.Printf("unmarshalled: %v", unmarshalled)
 
-	userMap := make(map[string]helpers.User)
+	//write json from a struct
+	flash := helpers.NewPerson("Wally", "West", "red", false)
+	wonder_woman := helpers.NewPerson("Diana", "Prince", "black", false)
 
-	userMap["john"] = userJohn
-	userMap["mike"] = userMike
+	helpers.People = append(helpers.People, flash)
+	helpers.People = append(helpers.People, wonder_woman)
 
-	names := []string{userJohn.FirstName, userMike.FirstName}
+	newJson, err := json.MarshalIndent(helpers.People, "", "    ")
 
-	for name, user := range userMap {
-		log.Println(name, user.MyName(), user.MyAge())
-	}
-
-	log.Println(names)
+	log.Println("People JSON:", string(newJson))
 
 }
