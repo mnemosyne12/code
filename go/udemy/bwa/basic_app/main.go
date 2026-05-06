@@ -5,6 +5,8 @@ import (
 	"net/http"
 )
 
+const portNumber = ":8081"
+
 func main() {
 	fmt.Println("start")
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
